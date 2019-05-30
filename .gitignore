@@ -1,0 +1,19 @@
+# Mac OS X Desktop Services Store
+.DS_Store
+
+# Log File
+*.log
+
+# Node JS Folder
+node_modules/
+
+# FF File
+dist/
+
+# Temp File
+tmps/
+.cache/
+
+# Temp File
+uploads/*
+records/*
