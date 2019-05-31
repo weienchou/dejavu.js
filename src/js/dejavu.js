@@ -1,5 +1,6 @@
 let d = {};
 
+d.fn = {};
 d.ta = 'deja';
 d.debug = 1;
 
@@ -16,7 +17,7 @@ d.isset = function(ta, type) {
 };
 
 d.check = function(ta) {
-    return d.isset(d[ta]);
+    return d.isset(d.fn[ta]);
 };
 
 d.log = function(...msg) {
@@ -40,21 +41,37 @@ d.err = function(...msg) {
 };
 
 d.handler = function(evt) {
-    let me = _d(this);
+    let me = f(this);
     if (me.attr('data-nopde') != 1) {
         evt.preventDefault();
         d.log('NOPDE');
     }
 
-    d.log('EXEC::start');
+    d.log('Exec::start');
     me.event = evt;
 
-    d.exec(d.store.get(this, 'fl')[evt.type], me);
+    d.exec(me.get('plant')[evt.type], me);
 };
 
-d.exec = function() {
+d.notfound = function() {
+    d.err();
+};
 
-}
+d.exec = function(funcName, el) {
+    let func = (d.check(funcName)) ? d.fn[funcName] : d['notfound'];
+
+    d.log('EXEC::' + funcName);
+
+    return func.call(this, el);
+};
+
+d.hook = function(funcName, func, evt) {
+    if (!d.check(funcName)) {
+        d.fn[funcName] = func;
+    } else {
+        d.log(funcName + ' overwrite');
+    }
+};
 
 d.init = box => {
     let plant = {};
@@ -86,8 +103,6 @@ d.init = box => {
                 }
             }
         });
-
-        d.log(me, func, plant, f.fn)
     });
 };
 

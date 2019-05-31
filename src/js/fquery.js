@@ -42,6 +42,12 @@ class Unit {
         }
     }
 
+    data(name, value) {
+        name = 'data-' + name;
+
+        return this.attr(name, value);
+    }
+
     on(type, callback) {
         this.units.forEach(function(el) {
             f.n.store.set(el, type, callback);
