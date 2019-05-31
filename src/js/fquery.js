@@ -248,11 +248,11 @@ class Unit {
     /* --- * * --- */
 
     serialize() {
-        let form = this;
+        let form = this.units[0];
         let serialized = [];
 
-        for (let i = 0; i < form.length; i++) {
-            let field = form.get(i);
+        for (let i = 0; i < form.elements.length; i++) {
+            let field = form.elements[i];
 
             if (!field.name || field.disabled || field.type === 'file' || field.type === 'reset' || field.type === 'submit' || field.type === 'button') {
                 continue;
