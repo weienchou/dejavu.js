@@ -1,11 +1,20 @@
-import './styles.css';
+(function(root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define([], factory);
+    } else if (typeof define === 'function' && define.cmd) {
+        define(function(require, exports, module) {
+            module.exports = factory()
+        });
+    } else if (typeof exports === 'object') {
+        module.exports = factory();
+    } else {
+        root.LocalStorage = factory();
+    }
+})(this, function() {
+    require('./styles.css');
 
-global.f = require('./js/fquery.js');
-global.djv = require('./js/dejavu.js');
+    global.f = require('./js/fquery.js');
+    global.djv = require('./js/dejavu.js');
 
-
-djv.hook('test', (me) => {
-    djv.log(me);
+    return [f, djv];
 });
-
-djv.init();

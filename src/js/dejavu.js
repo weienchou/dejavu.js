@@ -76,6 +76,7 @@ d.hook = function(funcName, func, evt) {
 d.init = box => {
     let plant = {};
     let el = f('.' + d.ta, box);
+
     el.toggleClass(d.ta + ' djv');
 
     el.each(ta => {
@@ -104,6 +105,8 @@ d.init = box => {
             }
         });
     });
+
+    el.toggleClass('djv')
 };
 
 module.exports = d;

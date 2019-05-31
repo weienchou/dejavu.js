@@ -1,11 +1,4 @@
-body {
-  font-family: sans-serif;
-}
-
 .djv,
-.deja,
-.hide,
-.closed {
-  color: red;
-  /* display: none; */
+.deja {
+    display: none;
 }
