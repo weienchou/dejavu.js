@@ -80,6 +80,8 @@ class Unit {
         this.units.forEach(function(el) {
             el.remove();
         });
+
+        return this;
     }
 
     find(selector) {
@@ -102,8 +104,8 @@ class Unit {
 
     siblings(selector) {
         var matching = [];
-        let parent = _d(this.units[0]).parent();
-        let child = _d(parent.units[0]).children();
+        let parent = f(this.units[0]).parent();
+        let child = f(parent.units[0]).children();
 
         child.each((el) => {
             if (f(el).is(selector)) {
@@ -115,15 +117,15 @@ class Unit {
     }
 
     closest(selector) {
-        let ele = _d(this.units[0]);
+        let ele = f(this.get(0));
 
         do {
             if (ele.is(selector)) {
                 return ele;
             }
 
-            ele = ele.parent().get(0);
-        } while (ele.units[0] !== null && ele.length > 0);
+            ele = ele.parent();
+        } while (ele.get(0) !== null);
 
         return null;
     }
@@ -227,25 +229,30 @@ class Unit {
     }
 
     empty() {
-        if (typeof string !== 'undefined') {
-            this.units.forEach(function(el) {
-                el.innerHTML = '';
-            });
+        this.html('');
+        return this;
+    }
 
+    prop(name, value) {
+        if (typeof value !== 'undefined') {
+            this.units.forEach(function(el) {
+                el[name] = value;
+            });
             return this;
         } else {
-            return this.units[0].innerHTML = '';
+            return this.units[0][name];
         }
-    }
+    };
+
 
     /* --- * * --- */
 
     serialize() {
-        let form = this.units[0];
+        let form = this;
         let serialized = [];
 
-        for (let i = 0; i < form.units.length; i++) {
-            let field = form.units[i];
+        for (let i = 0; i < form.length; i++) {
+            let field = form.get(i);
 
             if (!field.name || field.disabled || field.type === 'file' || field.type === 'reset' || field.type === 'submit' || field.type === 'button') {
                 continue;
@@ -269,14 +276,6 @@ class Unit {
 
     /* --- * * --- */
 
-    get html() {
-        return this.units[0].html;
-    }
-
-    set html(newHtml) {
-        return this.units[0].innerHTML = newHtml;
-    }
-
     get outerHTML() {
         return this.units[0].outerHTML;
     }
@@ -286,44 +285,45 @@ class Unit {
     }
 
     get class() {
-        return this.units[0].classList;
+        return this.units[0].className;
     }
 
     set class(newClass) {
-        return this.units[0].classList = newClass;
+        return this.units[0].className = newClass;
     }
 
     /* --- * * --- */
 
     on(type, callback) {
         this.units.forEach(function(el) {
-            f.n.store.set(el, type, callback);
-            el.addEventListener(type, f.n.store.get(el, type));
+            let ta = f(el);
+            ta.store(type, callback);
+            el.addEventListener(type, ta.store(type));
         });
     }
 
     off(type) {
         this.units.forEach(function(el) {
-            el.removeEventListener(type, f.n.store.get(el, type));
+            let ta = f(el);
+            el.removeEventListener(type, ta.store(type));
         });
     }
 
     /* --- * * --- */
 
-    set(k, v) {
-        return f.n.store.set(this.units[0], k, v);
+    store(name, value) {
+        if (typeof value !== 'undefined') {
+            f.n.store.set(this.units[0], name, value);
+            return this;
+        } else {
+            return f.n.store.get(this.units[0], name);
+        }
     }
-
-    get(k) {
-        return f.n.store.get(this.units[0], k);
-    }
-
-    /* --- * * --- */
 }
 
 let f = (selector, box) => {
     let el;
-    box = typeof box !== 'undefined' ? box : document;
+    box = typeof box !== 'undefined' ? box.units[0] : document;
 
     if (selector instanceof Object) {
         return new Unit([selector]);

@@ -1,8 +1,12 @@
 {
   "name": "dejavujs",
-  "version": "1.0.0",
+  "version": "1.1.2",
   "description": "",
-  "main": "index.html",
+  "main": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:weienchou/dejavu.js.git"
+  },
   "scripts": {
     "start": "parcel index.html --open",
     "build": "parcel build index.html"

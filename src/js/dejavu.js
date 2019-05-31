@@ -4,6 +4,13 @@ d.fn = {};
 d.ta = 'deja';
 d.debug = 1;
 
+d.tmpls = {};
+
+d.version = '201905-2';
+
+d.apiUrl = '';
+d.csrf = false;
+
 d.isset = function(ta, type) {
     if (typeof ta === 'undefined' || ta === null) {
         return false;
@@ -47,10 +54,10 @@ d.handler = function(evt) {
         d.log('NOPDE');
     }
 
-    d.log('Exec::start');
+    d.log('Exec::handler', evt.type);
     me.event = evt;
 
-    d.exec(me.get('plant')[evt.type], me);
+    d.exec(me.store('plant')[evt.type], me);
 };
 
 d.notfound = function() {
@@ -60,7 +67,7 @@ d.notfound = function() {
 d.exec = function(funcName, el) {
     let func = (d.check(funcName)) ? d.fn[funcName] : d['notfound'];
 
-    d.log('EXEC::' + funcName);
+    d.log('Exec::' + funcName);
 
     return func.call(this, el);
 };
@@ -74,12 +81,12 @@ d.hook = function(funcName, func, evt) {
 };
 
 d.init = box => {
-    let plant = {};
     let el = f('.' + d.ta, box);
 
     el.toggleClass(d.ta + ' djv');
 
     el.each(ta => {
+        let plant = {};
         let me = f(ta);
         let func = me.attr('vu');
 
@@ -91,7 +98,7 @@ d.init = box => {
             });
         }
 
-        me.set('plant', plant);
+        me.store('plant', plant);
 
         Object.keys(plant).map(function(k) {
             if (!d.check(plant[k])) {
@@ -107,6 +114,21 @@ d.init = box => {
     });
 
     el.toggleClass('djv')
+};
+
+d.fn.bubble = function(me) {
+    let ta = f(me.event.target);
+    if (!ta.attr('func')) {
+        ta = ta.closest('[func]');
+    }
+
+    if (d.isset(ta)) {
+        let func = ta.attr('func');
+        if (d.check(func)) {
+            ta.event = me.event;
+            d.exec(func, ta);
+        }
+    }
 };
 
 module.exports = d;
