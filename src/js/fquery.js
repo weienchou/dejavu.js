@@ -42,6 +42,17 @@ class Unit {
         }
     }
 
+    removeAttr(name) {
+        if (typeof value !== 'undefined') {
+            this.units.forEach(function(el) {
+                el.removeAttr(name);
+            });
+            return this;
+        } else {
+            return this;
+        }
+    }
+
     data(name, value) {
         name = 'data-' + name;
 
@@ -54,6 +65,17 @@ class Unit {
         } else {
             this.units.forEach(function(el) {
                 el.value = value;
+            });
+            return this;
+        }
+    }
+
+    css(prop, value) {
+        if (typeof value === 'undefined') {
+            return this.units[0].style.getPropertyValue(prop);
+        } else {
+            this.units.forEach(function(el) {
+                el.style[prop] = value;
             });
             return this;
         }
