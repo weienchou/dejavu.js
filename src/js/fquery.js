@@ -130,7 +130,7 @@ class Unit {
         let child = f(parent.units[0]).children();
 
         child.each((el) => {
-            if (f(el).is(selector)) {
+            if (ta.is(selector) && !el.isEqualNode(this.units[0])) {
                 matching.push(el);
             }
         });
