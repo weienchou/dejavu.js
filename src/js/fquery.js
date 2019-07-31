@@ -131,7 +131,7 @@ class Unit {
 
         child.each((el) => {
             let ta = f(el);
-            
+
             if (ta.is(selector) && !el.isEqualNode(this.units[0])) {
                 matching.push(el);
             }
@@ -322,6 +322,18 @@ class Unit {
         this.units.forEach(function(el) {
             let ta = f(el);
             ta.store(type, callback);
+            el.addEventListener(type, ta.store(type));
+        });
+    }
+
+    one(type, callback) {
+        this.units.forEach(function(el) {
+            let ta = f(el);
+            ta.store(type, () => {
+                el.removeEventListener(type, ta.store(type));
+                callback.call();
+            });
+
             el.addEventListener(type, ta.store(type));
         });
     }
