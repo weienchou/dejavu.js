@@ -38,7 +38,7 @@ class Unit {
             });
             return this;
         } else {
-            return this.units[0].getAttribute(name);
+            return this.units.length === 0 ? '' : this.units[0].getAttribute(name);
         }
     }
 
