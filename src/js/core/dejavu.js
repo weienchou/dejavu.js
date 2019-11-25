@@ -40,7 +40,7 @@ d.err = function(...msg) {
         return true;
     }
 
-    console.log(
+    console.error(
         '%cDEJAVU:: Error::',
         'color: #ffcc00',
         msg.length === 1 ? msg[0] : msg ? msg : 'Unkown'
@@ -113,7 +113,7 @@ d.init = box => {
         });
     });
 
-    el.toggleClass('djv')
+    el.toggleClass('djv');
 };
 
 d.fn.bubble = function(me) {
