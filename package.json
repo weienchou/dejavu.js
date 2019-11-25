@@ -8,8 +8,8 @@
     "url": "git+ssh://git@github.com:weienchou/dejavu.js.git"
   },
   "scripts": {
-    "start": "parcel index.html --open",
-    "build": "parcel build index.html --out-dir dist --public-url ./ --no-cache"
+    "dev": "NODE_ENV=develope webpack-dev-server --open --progress --config config/config.dev.js",
+    "build": "NODE_ENV=production webpack --progress --config config/config.build.js"
   },
   "dependencies": {
     "axios": "^0.19.0",
@@ -17,21 +17,27 @@
     "template7": "^1.4.2"
   },
   "devDependencies": {
-    "@babel/core": "7.2.0",
-    "parcel-bundler": "^1.12.4",
-    "parcel-plugin-static-files-copy": "^2.2.1",
-    "sass": "^1.23.7"
+    "@babel/core": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
+    "autoprefixer": "^9.7.2",
+    "babel-loader": "^8.0.6",
+    "copy-webpack-plugin": "^5.0.5",
+    "css-loader": "^3.2.0",
+    "html-loader": "^0.5.5",
+    "mini-css-extract-plugin": "^0.8.0",
+    "node-sass": "^4.13.0",
+    "postcss-loader": "^3.0.0",
+    "sass-loader": "^8.0.0",
+    "style-loader": "^1.0.0",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.9.0"
   },
   "keywords": [],
-  "staticFiles": {
-    "staticPath": [{
-        "staticOutDir": "images",
-        "staticPath": "src/images"
-      },{
-        "staticOutDir": "tmpls",
-        "staticPath": "src/tmpls"
-      }
-    ],
-    "watcherGlob": "**"
-  }
+  "browserslist": [
+    "last 1 version",
+    "> 1%",
+    "maintained node versions",
+    "not dead"
+  ]
 }

@@ -5,7 +5,7 @@ import { Controller } from './controller.js';
 import { View } from './view.js';
 import { Model } from './model.js';
 
-import controllers from '../controllers/*.js';
+// import controllers from '../controllers/*.js';
 
 
 // import AJAX from './ajax.js';
@@ -59,7 +59,7 @@ export class App {
             djv.log('popup');
         } else {
             const moduleName = Helper.ucfirct(params['module']);
-            const classCalled = controllers[params['module']][moduleName];
+            const classCalled = require(`../controllers/${params['module']}.js`)[moduleName];
 
             if (djv.isset(classCalled)) {
                 if (!djv.isset(this.fn[params['module']])) {

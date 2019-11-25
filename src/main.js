@@ -1,5 +1,5 @@
-global.f = require('./js/core/fquery.js');
-global.djv = require('./js/core/dejavu.js');
+window.f = require('./js/core/fquery.js');
+window.djv = require('./js/core/dejavu.js');
 
 window.mainUrl = 'https://cmtb.sense-info.co';
 window.apiUri = '/api/';
@@ -23,7 +23,7 @@ djv.version = '20191125';
 import { App } from './js/core/app.js';
 
 // load main css
-require('bulma');
+// require('bulma');
 require('./scss/styles.scss');
 
 (function() {
