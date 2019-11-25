@@ -355,6 +355,12 @@ class Unit {
             return f.n.store.get(this.units[0], name);
         }
     }
+
+    focus() {
+        if (this.units.length > 0) {
+            this.units[0].focus();
+        }
+    }
 }
 
 let f = (selector, box) => {
